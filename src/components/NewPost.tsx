@@ -3,6 +3,7 @@ import classes from "./NewPost.module.css";
 
 interface NewPostProps {
   onCancel: () => void;
+  onAddPost: (postData: { body: string; author: string }) => void;
 }
 
 function NewPost(props: NewPostProps) {
@@ -21,18 +22,6 @@ function NewPost(props: NewPostProps) {
     setEnteredAuthor(event.target.value);
   }
 
-  let modalContent: JSX.Element | null = null;
-
-  //   if (isPosting) {
-  //     modalContent = (
-  //       <Modal onClose={onStopPosting}>
-  //         <NewPost
-  //           onCancel={onStopPosting}
-  //         />
-  //       </Modal>
-  //     );
-  //   }
-
   function sumbitHandler(event: React.FormEvent<HTMLFormElement>) {
     // This prevents the browser from sending and generating an HTTP request. (React frontend library, cannot handle server-side requests)
     event.preventDefault();
@@ -40,6 +29,7 @@ function NewPost(props: NewPostProps) {
       body: enteredBody,
       author: enteredAuthor,
     };
+    props.onAddPost(postData);
     props.onCancel();
   }
 
