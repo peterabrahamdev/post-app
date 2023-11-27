@@ -31,7 +31,16 @@ function PostsList({
         </Modal>
       )}
       <ul className={classes.posts}>
-        <Post author="Manuel" body="Check out my website!" />
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <Post key={Math.random()} author={post.author} body={post.body} />
+          ))
+        ) : (
+          <div style={{ textAlign: "center", color: "white" }}>
+            <h2>There are no posts yet.</h2>
+            <p>Start adding some!</p>
+          </div>
+        )}
       </ul>
     </>
   );
