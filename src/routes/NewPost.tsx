@@ -1,9 +1,9 @@
-import { ChangeEventHandler, MouseEventHandler, useState } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import classes from "./NewPost.module.css";
 import Modal from "../components/Modal";
 
 interface NewPostProps {
-  onCancel: () => void;
   onAddPost: (postData: { body: string; author: string }) => void;
 }
 
@@ -31,7 +31,6 @@ function NewPost(props: NewPostProps) {
       author: enteredAuthor,
     };
     props.onAddPost(postData);
-    props.onCancel();
   }
 
   return (
@@ -52,9 +51,9 @@ function NewPost(props: NewPostProps) {
           />
         </p>
         <p className={classes.actions}>
-          <button type="button" onClick={props.onCancel}>
+          <Link to='/' type="button">
             Cancel
-          </button>
+          </Link>
           <button>Submit</button>
         </p>
       </form>
