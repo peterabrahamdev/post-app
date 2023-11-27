@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import NewPost from "./NewPost";
 import Post from "./Post";
-import Modal from "./Modal";
 import classes from "./PostsList.module.css";
 
 interface Post {
@@ -9,13 +7,7 @@ interface Post {
   author: string;
 }
 
-function PostsList({
-  isPosting,
-  onStopPosting,
-}: {
-  isPosting: boolean;
-  onStopPosting: () => void;
-}) {
+function PostsList() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -43,15 +35,6 @@ function PostsList({
   }
   return (
     <>
-      {isPosting && (
-        <Modal onClose={onStopPosting}>
-          <NewPost
-            onCancel={onStopPosting}
-            onAddPost={addPostHandler}
-          ></NewPost>
-        </Modal>
-      )}
-
       {!isFetching && posts.length > 0 && (
         <ul className={classes.posts}>
           {posts.map((post) => (
