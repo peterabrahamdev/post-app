@@ -1,3 +1,5 @@
+import classes from './Post.module.css'
+
 interface PostProps {
   author: string;
   body: string;
@@ -5,9 +7,9 @@ interface PostProps {
 
 function Post(props: PostProps) {
   return (
-    <div>
-      <p>{props.author}</p>
-      <p>{props.body}</p>
+    <div className={classes.post}>
+      <p className={classes.author}>{props.author}</p>
+      <p className={classes.text}>{props.body}</p>
     </div>
   );
 }
