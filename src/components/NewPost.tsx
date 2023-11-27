@@ -1,26 +1,22 @@
-import { useState } from "react";
+import { ChangeEventHandler } from "react";
 import classes from "./NewPost.module.css";
 
-function NewPost() {
-  // useState's variable always has two data:
-  // enteredBody -> current value
-  // setEnteredBody -> state updating function
-  // When you call the state updating function, React will rebuild the whole function
-  // you called it in
-  const [enteredBody, setEnteredBody] = useState("");
-  function changeBodyHandler(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setEnteredBody(event.target.value);
-  }
+interface NewPostProps {
+  onBodyChange: ChangeEventHandler<HTMLTextAreaElement>;
+  onAuthorChange: ChangeEventHandler<HTMLInputElement>;
+}
+
+function NewPost(props: NewPostProps) {
   return (
     <form className={classes.form}>
       <p>
         <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={changeBodyHandler} />
+        <textarea id="body" required rows={3} onChange={props.onBodyChange} />
       </p>
-      <p>{enteredBody}</p>
+      <p>{}</p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required />
+        <input type="text" id="name" required onChange={props.onAuthorChange}/>
       </p>
     </form>
   );
