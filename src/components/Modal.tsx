@@ -1,10 +1,19 @@
+import { ChangeEventHandler, MouseEventHandler } from "react";
 import classes from "./Modal.module.css";
 
-function Modal({ children }: { children: React.ReactNode }) {
+function Modal({
+  children,
+  onClose,
+}: {
+  children: React.ReactNode;
+  onClose: MouseEventHandler<HTMLDivElement>;
+}) {
   return (
     <>
-      <div className={classes.backdrop} />
-      <dialog open className={classes.modal}>{children}</dialog>
+      <div className={classes.backdrop} onClick={onClose} />
+      <dialog open className={classes.modal}>
+        {children}
+      </dialog>
     </>
   );
 }
