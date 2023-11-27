@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewPost from "./NewPost";
 import Post from "./Post";
 import Modal from "./Modal";
@@ -16,15 +16,25 @@ function PostsList({
   isPosting: boolean;
   onStopPosting: () => void;
 }) {
+  useEffect(() => {
+    async function fetchPosts() {
+      const response = await fetch("http://localhost:8080/posts");
+      const resData = await response.json();
+      setPosts(resData.posts);
+    }
+
+    fetchPosts();
+  }, []);
+
   const [posts, setPosts] = useState<Post[]>([]);
   function addPostHandler(postData: Post) {
-    fetch('http://localhost:8080/posts', {
-      method: 'POST',
+    fetch("http://localhost:8080/posts", {
+      method: "POST",
       body: JSON.stringify(postData),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        "Content-Type": "application/json",
+      },
+    });
     setPosts((existingPosts) => [postData, ...existingPosts]);
   }
   return (
@@ -37,18 +47,19 @@ function PostsList({
           ></NewPost>
         </Modal>
       )}
-      <ul className={classes.posts}>
-        {posts.length > 0 ? (
-          posts.map((post) => (
+
+      {posts.length > 0 ? (
+        <ul className={classes.posts}>
+          {posts.map((post) => (
             <Post key={Math.random()} author={post.author} body={post.body} />
-          ))
-        ) : (
-          <div style={{ textAlign: "center", color: "white" }}>
-            <h2>There are no posts yet.</h2>
-            <p>Start adding some!</p>
-          </div>
-        )}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <h2>There are no posts yet.</h2>
+          <p>Start adding some!</p>
+        </div>
+      )}
     </>
   );
 }
